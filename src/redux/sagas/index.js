@@ -1,8 +1,10 @@
 import { all } from 'redux-saga/effects';
-import { itemCityWeatherSaga } from './cityWeatherSaga';
+import { itemCityWeatherSaga, updateCitySaga, deleteCitySaga } from './cityWeatherSaga';
 
 export default function* rootSaga() {
    yield all([
-      itemCityWeatherSaga()
+      itemCityWeatherSaga(),
+      updateCitySaga(),
+      deleteCitySaga()
    ]);
 }
