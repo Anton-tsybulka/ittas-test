@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCityWeather, deleteCity, updateCity } from './redux/actions/cityWeatherActions';
+import { getCityWeather, deleteCity, updateCity, citySearch } from './redux/actions/cityWeatherActions';
 import CitySearch from './components/CitySearch';
 import ListCity from './components/ListCity';
 
 function App() {
-  const cityWeather = useSelector((state) => state.cityWeather.data);
+  const { data: cityWeather, resultSearch } = useSelector((state) => state.cityWeather);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,9 +21,15 @@ function App() {
     dispatch(updateCity(city));
   };
 
+  const search = (value) => {
+    dispatch(citySearch(value));
+  };
+
   return (
     <>
-      <CitySearch />
+      <CitySearch
+        search={search}
+        resultSearch={resultSearch} />
       <ListCity 
         cityWeather={cityWeather}
         handleDelete={handleDelete}

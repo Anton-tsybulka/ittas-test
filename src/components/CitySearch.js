@@ -3,29 +3,36 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-function onChange(value) {
-  console.log(`selected ${value}`);
-}
 
-function onBlur() {
-  console.log('blur');
-}
 
-function onFocus() {
-  console.log('focus');
-}
-
-function onSearch(val) {
-  console.log('search:', val);
-}
-
-const CitySearch = () => {
+const CitySearch = ({ search, resultSearch }) => {
+  const renderResultSearch = resultSearch.map(({id, name}) => (
+    <Option key={id} value={name}>{name}</Option>
+  ));
+  
+  const onChange = (value) => {
+    
+  };
+  
+  const onBlur = () => {
+    console.log('blur');
+  }
+  
+  const onFocus = () => {
+    console.log('focus');
+  }
+  
+  const onSearch = (val) => {
+    if (val.length >= 3) {
+      search(val);
+    };
+  }
     return (
         <Select
     showSearch
     style={{ width: 600, margin: '2em' }}
-    placeholder="Select a city"
-    optionFilterProp="children"
+    placeholder='Выберите город'
+    optionFilterProp='children'
     onChange={onChange}
     onFocus={onFocus}
     onBlur={onBlur}
@@ -34,9 +41,7 @@ const CitySearch = () => {
       option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
     }
   >
-    <Option value="Minsk">Минск</Option>
-    <Option value="London">Лондон</Option>
-    <Option value="Berlin">Берлин</Option>
+    {renderResultSearch}    
   </Select>
     );
 }
