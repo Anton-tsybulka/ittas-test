@@ -5,26 +5,18 @@ const { Option } = Select;
 
 
 
-const CitySearch = ({ search, resultSearch }) => {
+const CitySearch = ({ handleSearch, resultSearch, handleAdd }) => {
   const renderResultSearch = resultSearch.map(({id, name}) => (
     <Option key={id} value={name}>{name}</Option>
   ));
   
-  const onChange = (value) => {
-    
+  const onChange = (city) => {
+    handleAdd(city);
   };
-  
-  const onBlur = () => {
-    console.log('blur');
-  }
-  
-  const onFocus = () => {
-    console.log('focus');
-  }
-  
-  const onSearch = (val) => {
+
+  const onSearch = (val) => {    
     if (val.length >= 3) {
-      search(val);
+      handleSearch(val);
     };
   }
     return (
@@ -34,8 +26,6 @@ const CitySearch = ({ search, resultSearch }) => {
     placeholder='Выберите город'
     optionFilterProp='children'
     onChange={onChange}
-    onFocus={onFocus}
-    onBlur={onBlur}
     onSearch={onSearch}
     filterOption={(input, option) =>
       option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0

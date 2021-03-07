@@ -1,11 +1,13 @@
 import {
     GET_CITYWEATHER_REQUESTED,
     GET_CITYWEATHER_SUCCESS,
-    DELETE_CITYWEATHER_SUCCESS,
+    ADD_CITYWEATHER_REQUESTED,
+    ADD_CITYWEATHER_SUCCESS,    
     UPDATE_CITYWEATHER_REQUESTED,
     UPDATE_CITYWEATHER_SUCCESS,
-    SEARCH_CITY_REQUESTED,
-    SEARCH_CITY_SUCCESS,
+    SEARCH_CITYWEATHER_REQUESTED,
+    SEARCH_CITYWEATHER_SUCCESS,
+    DELETE_CITYWEATHER_SUCCESS,
     CITYWEATHER_FAILED,    
 } from '../actions/actionTypes';
  
@@ -23,23 +25,37 @@ export default function cityWeatherReducer(state = initialState, action) {
             return {
                 ...state,
                 data: [...state.data, action.payload],
-             };
+            };
+        case ADD_CITYWEATHER_REQUESTED:
+            return { ...state };
+        case ADD_CITYWEATHER_SUCCESS:
+            if (state.data.find(({id}) => id === action.payload.id)) {
+                return { ...state };
+            } else {
+                return {
+                    ...state,
+                    data: [
+                        ...state.data,
+                        action.payload                    
+                    ],
+                };
+            };            
         case UPDATE_CITYWEATHER_REQUESTED:
             return { ...state };
         case UPDATE_CITYWEATHER_SUCCESS:
             const idx = state.data.findIndex(({id}) => id === action.payload.id);            
             const updateCity = {...state.data[idx], ...action.payload}
-        return {
+            return {
                 ...state,
                 data: [
                     ...state.data.slice(0, idx),
                     updateCity,
                     ...state.data.slice(idx + 1)
                ],
-        };
-        case SEARCH_CITY_REQUESTED:
+            };
+        case SEARCH_CITYWEATHER_REQUESTED:
             return { ...state };
-        case SEARCH_CITY_SUCCESS:
+        case SEARCH_CITYWEATHER_SUCCESS:
             return {
                 ...state,
                 resultSearch: [...action.payload]

@@ -1,8 +1,9 @@
 import {
     GET_CITYWEATHER_REQUESTED,
-    UPDATE_CITYWEATHER_REQUESTED,
+    ADD_CITYWEATHER_REQUESTED,
+    UPDATE_CITYWEATHER_REQUESTED,    
+    SEARCH_CITYWEATHER_REQUESTED,
     DELETE_CITYWEATHER_REQUESTED,
-    SEARCH_CITY_REQUESTED,
 } from './actionTypes';
 
 export const getCityWeather = (data) => {
@@ -12,14 +13,21 @@ export const getCityWeather = (data) => {
     };
 };
 
-export const updateCity = (data) => {
+export const cityUpdate = (data) => {
     return {
         type: UPDATE_CITYWEATHER_REQUESTED,
         payload: data,
     };
 };
 
-export const deleteCity = (data) => {
+export const cityAdd = (data) => {
+    return {
+        type: ADD_CITYWEATHER_REQUESTED,
+        payload: data,
+    };
+};
+
+export const cityDelete = (data) => {
     return {
         type: DELETE_CITYWEATHER_REQUESTED,
         payload: data,
@@ -28,7 +36,7 @@ export const deleteCity = (data) => {
 
 export const citySearch = (data) => {
     return {
-        type: SEARCH_CITY_REQUESTED,
+        type: SEARCH_CITYWEATHER_REQUESTED,
         payload: data,
     };
 };

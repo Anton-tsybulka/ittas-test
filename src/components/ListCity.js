@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Card, Button } from 'antd';
-
+import { dataConversion, windDirection } from '../helpers';
 
 const ListCity = ({ cityWeather, handleDelete, handleUpdate }) => {
     const data = new Date();
@@ -33,8 +33,8 @@ const ListCity = ({ cityWeather, handleDelete, handleUpdate }) => {
                         <p>Температура: {main.temp}*C</p>
                         <p>Влажность: {main.humidity}%</p>
                         <p>Атмосферное давление: {main.pressure}</p>
-                        <p>Сила и напрвление ветра: {wind.speed}М/С - {wind.deg}</p>
-                        <p>Последнее обновление данных: {data.toString()}</p>
+                        <p>Сила и напрвление ветра: {wind.speed}М/С - {windDirection(wind.deg)}</p>
+                        <p>Последнее обновление данных: {dataConversion(data)}</p>
                     </Card>
                 </List.Item>
             )}

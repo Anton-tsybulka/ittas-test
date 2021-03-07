@@ -1,26 +1,18 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
-const apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=Minsk&units=metric&appid=784081e6b015cdcdacd31e6d9bf22fb8';
+let cityRequest  = 'Minsk';
 
-const getCityWeather = () =>
+const apiUrl = (city) => {
+   return `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=784081e6b015cdcdacd31e6d9bf22fb8`
+};
+
+const getCityWeather = (city = cityRequest) =>
    axios
-      .get(apiUrl)
+      .get(apiUrl(city))
       .then((result) => result.data)
       .then((result) => {
-         localStorage.setItem('Minsk', JSON.stringify(result))
-         return JSON.parse(localStorage.getItem('Minsk'));
-      })
-      .catch((error) => {
-         throw error;
-      });
-
-const updateCity = (city) =>
-   axios
-      .get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=784081e6b015cdcdacd31e6d9bf22fb8`)
-      .then((result) => result.data)
-      .then((result) => {
-         localStorage.setItem('Minsk', JSON.stringify(result))
-         return JSON.parse(localStorage.getItem('Minsk'));
+         localStorage.setItem(city, JSON.stringify(result))
+         return JSON.parse(localStorage.getItem(city));
       })
       .catch((error) => {
          throw error;
@@ -57,8 +49,17 @@ function* fetchCityWeather() {
 
 function* fetchUpdateCity(action) {
    try {
-      const city = yield call(() => updateCity(action.payload));
+      const city = yield call(() => getCityWeather(action.payload));
       yield put({ type: 'UPDATE_CITYWEATHER_SUCCESS', payload: city });
+   } catch (error) {
+      yield put({ type: 'CITYWEATHER_FAILED', message: error.message });
+   }
+}
+
+function* fetchAddCity(action) {
+   try {
+      const city = yield call(() => getCityWeather(action.payload));
+      yield put({ type: 'ADD_CITYWEATHER_SUCCESS', payload: city });
    } catch (error) {
       yield put({ type: 'CITYWEATHER_FAILED', message: error.message });
    }
@@ -67,7 +68,7 @@ function* fetchUpdateCity(action) {
 function* fetchSearchCity(action) {
    try {
       const city = yield call(() => citySearch(action.payload));
-      yield put({ type: 'SEARCH_CITY_SUCCESS', payload: city });
+      yield put({ type: 'SEARCH_CITYWEATHER_SUCCESS', payload: city });
    } catch (error) {
       yield put({ type: 'CITYWEATHER_FAILED', message: error.message });
    }
@@ -89,14 +90,18 @@ function* updateCitySaga() {
    yield takeEvery('UPDATE_CITYWEATHER_REQUESTED', fetchUpdateCity);
 }
 
+function* addCitySaga() {
+   yield takeEvery('ADD_CITYWEATHER_REQUESTED', fetchAddCity);
+}
+
 function* searchCitySaga() {
-   yield takeEvery('SEARCH_CITY_REQUESTED', fetchSearchCity);
+   yield takeEvery('SEARCH_CITYWEATHER_REQUESTED', fetchSearchCity);
 }
 
 function* deleteCitySaga() {
    yield takeEvery('DELETE_CITYWEATHER_REQUESTED', fetchDeleteCity);
 }
 
-export { itemCityWeatherSaga, updateCitySaga, searchCitySaga , deleteCitySaga };
+export { itemCityWeatherSaga, addCitySaga, updateCitySaga, searchCitySaga , deleteCitySaga };
 
 /* &lang=ru */
