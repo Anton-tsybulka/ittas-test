@@ -28,7 +28,7 @@ const dataConversion = (data) => {
 };
 
 const windDirection = (direction) => {
-    if (10 >= direction && direction >= 350) {
+    if (10 >= direction || direction >= 350) {
         return <BsArrowUp />;
     } else if (10 < direction && direction < 80) {
         return <BsArrowUpRight />;

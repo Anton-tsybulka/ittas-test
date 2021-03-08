@@ -20,17 +20,17 @@ const CitySearch = ({ handleSearch, resultSearch, handleAdd }) => {
     };
   }
     return (
-        <Select
-    showSearch
-    style={{ width: 600, margin: '2em' }}
-    placeholder='Выберите город'
-    optionFilterProp='children'
-    onChange={onChange}
-    onSearch={onSearch}
-    filterOption={(input, option) =>
-      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-    }
-  >
+      <Select
+        showSearch
+        allowClear
+        style={{ width: 600, margin: '2em' }}
+        placeholder='Выберите город'
+        optionFilterProp='children'
+        onChange={onChange}
+        onSearch={onSearch}
+        filterOption={(input, option) =>
+          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }>
     {renderResultSearch}    
   </Select>
     );

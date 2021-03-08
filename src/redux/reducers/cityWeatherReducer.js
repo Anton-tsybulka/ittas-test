@@ -56,10 +56,19 @@ export default function cityWeatherReducer(state = initialState, action) {
         case SEARCH_CITYWEATHER_REQUESTED:
             return { ...state };
         case SEARCH_CITYWEATHER_SUCCESS:
+            let sortItem = [];
+            action.payload.forEach((item) => {
+                if (!state.resultSearch.find(({id}) => id === item.id)) {
+                    sortItem.push(item);
+                };
+            })
             return {
                 ...state,
-                resultSearch: [...action.payload]
-            }
+                resultSearch: [
+                    ...state.resultSearch,
+                    ...sortItem                    
+                ]
+            };
         case DELETE_CITYWEATHER_SUCCESS:
             return {
                 ...state,
