@@ -48,7 +48,35 @@ const windDirection = (direction) => {
     };
 };
 
+const maxMinSort = (arr) => {
+    if (arr.length === 0) {
+        const text ='Select city';
+
+        return {
+            maxT: 0,
+            maxC: text,
+            minT: 0,
+            minC: text
+        };        
+    };
+
+    const temperature = arr.map(({main: { temp } }) => temp).sort((a, b) => a - b);
+    const min = arr.find(({main: { temp } }) => temperature[0] === temp);
+    const max = arr.find(({main: { temp } }) => temperature[temperature.length -1] === temp);
+
+    const { main: { temp: maxT }, name: maxC } = max;
+    const { main: { temp: minT }, name: minC } = min;
+
+    return {
+        maxT,
+        maxC,
+        minT,
+        minC
+    };
+};
+
 export {
     dataConversion,
-    windDirection
+    windDirection,
+    maxMinSort
 };

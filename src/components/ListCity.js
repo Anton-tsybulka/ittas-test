@@ -15,7 +15,7 @@ const ListCity = ({ cityWeather, handleDelete, handleUpdate }) => {
             xxl: 3,
             }}
             dataSource={cityWeather}
-            renderItem={({main, name, wind, id}) => (
+            renderItem={({main: { temp, humidity, pressure }, name, wind, id}) => (
                 <List.Item key={id}>
                     <Card 
                     title={`Город: ${name}`}
@@ -29,9 +29,9 @@ const ListCity = ({ cityWeather, handleDelete, handleUpdate }) => {
                             size='small'
                             onClick={() => handleUpdate(name)}>Обновить</Button>
                     ]}>
-                        <p>Температура: {main.temp}°C</p>
-                        <p>Влажность: {main.humidity}%</p>
-                        <p>Атмосферное давление: {main.pressure}</p>
+                        <p>Температура: {temp}°C</p>
+                        <p>Влажность: {humidity}%</p>
+                        <p>Атмосферное давление: {pressure}</p>
                         <p>Сила и напрвление ветра: {wind.speed}М/С - {windDirection(wind.deg)}</p>
                         <p>Последнее обновление данных: {dataConversion()}</p>
                     </Card>

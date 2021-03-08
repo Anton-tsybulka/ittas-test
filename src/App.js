@@ -36,13 +36,13 @@ const App = () => {
 
   return (
     <>
-      <div>
+      <div style={{display: 'flex', justifyContent: 'center'}}>
         <CitySearch
           handleAdd={handleAdd}
           handleSearch={handleSearch}
           handleClear={handleClear}
           resultSearch={resultSearch} />
-        <MaxMinShow />
+        <MaxMinShow cityWeather={cityWeather} />
       </div>      
       <ListCity 
         cityWeather={cityWeather}
