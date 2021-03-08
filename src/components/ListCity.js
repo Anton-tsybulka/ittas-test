@@ -3,7 +3,6 @@ import { List, Card, Button } from 'antd';
 import { dataConversion, windDirection } from '../helpers';
 
 const ListCity = ({ cityWeather, handleDelete, handleUpdate }) => {
-    const data = new Date();
     return (
         <List
             grid={{
@@ -30,11 +29,11 @@ const ListCity = ({ cityWeather, handleDelete, handleUpdate }) => {
                             size='small'
                             onClick={() => handleUpdate(name)}>Обновить</Button>
                     ]}>
-                        <p>Температура: {main.temp}*C</p>
+                        <p>Температура: {main.temp}°C</p>
                         <p>Влажность: {main.humidity}%</p>
                         <p>Атмосферное давление: {main.pressure}</p>
                         <p>Сила и напрвление ветра: {wind.speed}М/С - {windDirection(wind.deg)}</p>
-                        <p>Последнее обновление данных: {dataConversion(data)}</p>
+                        <p>Последнее обновление данных: {dataConversion()}</p>
                     </Card>
                 </List.Item>
             )}

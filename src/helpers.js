@@ -1,6 +1,7 @@
 import { BsArrowUp, BsArrowUpRight, BsArrowRight, BsArrowDownRight, BsArrowDown, BsArrowDownLeft, BsArrowLeft, BsArrowUpLeft } from 'react-icons/bs';
 
-const dataConversion = (data) => {
+const dataConversion = () => {
+    const data = new Date();
     const dayNumber = data.getDate();
     const month = data.getMonth();
     const year = data.getFullYear();
