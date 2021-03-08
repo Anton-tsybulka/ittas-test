@@ -3,6 +3,7 @@ import {
     ADD_CITYWEATHER_REQUESTED,
     UPDATE_CITYWEATHER_REQUESTED,    
     SEARCH_CITYWEATHER_REQUESTED,
+    SEARCHCLEAR_CITYWEATHER_REQUESTED,
     DELETE_CITYWEATHER_REQUESTED,
 } from './actionTypes';
 
@@ -37,6 +38,13 @@ export const cityDelete = (data) => {
 export const citySearch = (data) => {
     return {
         type: SEARCH_CITYWEATHER_REQUESTED,
+        payload: data,
+    };
+};
+
+export const resultSearchClear = (data) => {
+    return {
+        type: SEARCHCLEAR_CITYWEATHER_REQUESTED,
         payload: data,
     };
 };

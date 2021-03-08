@@ -7,6 +7,7 @@ import {
     UPDATE_CITYWEATHER_SUCCESS,
     SEARCH_CITYWEATHER_REQUESTED,
     SEARCH_CITYWEATHER_SUCCESS,
+    SEARCHCLEAR_CITYWEATHER_SUCCESS,
     DELETE_CITYWEATHER_SUCCESS,
     CITYWEATHER_FAILED,    
 } from '../actions/actionTypes';
@@ -56,18 +57,24 @@ export default function cityWeatherReducer(state = initialState, action) {
         case SEARCH_CITYWEATHER_REQUESTED:
             return { ...state };
         case SEARCH_CITYWEATHER_SUCCESS:
-            let sortItem = [];
+            let sortItems = [];
             action.payload.forEach((item) => {
-                if (!state.resultSearch.find(({id}) => id === item.id)) {
-                    sortItem.push(item);
+                let a = !!state.resultSearch.find(({id}) => id === item.id);
+                if (!a) {
+                    sortItems.push(item);
                 };
             })
             return {
                 ...state,
                 resultSearch: [
                     ...state.resultSearch,
-                    ...sortItem                    
+                    ...sortItems                    
                 ]
+            };
+        case SEARCHCLEAR_CITYWEATHER_SUCCESS:
+            return {
+                ...state,
+                resultSearch: [...state.resultSearch.slice(0, 0)]
             };
         case DELETE_CITYWEATHER_SUCCESS:
             return {

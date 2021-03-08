@@ -5,7 +5,7 @@ const { Option } = Select;
 
 
 
-const CitySearch = ({ handleSearch, resultSearch, handleAdd }) => {
+const CitySearch = ({ handleSearch, resultSearch, handleAdd, handleClear }) => {
   const renderResultSearch = resultSearch.map(({id, name}) => (
     <Option key={id} value={name}>{name}</Option>
   ));
@@ -22,14 +22,21 @@ const CitySearch = ({ handleSearch, resultSearch, handleAdd }) => {
     return (
       <Select
         showSearch
-        allowClear
+        mode='tags'
+        allowClear='true'
         style={{ width: 600, margin: '2em' }}
         placeholder='Выберите город'
         optionFilterProp='children'
+        onBlur={() => handleClear()}
         onChange={onChange}
         onSearch={onSearch}
-        filterOption={(input, option) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        filterOption={(input, option) =>{
+          if (option.children) {
+            return (
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            )
+          }
+        }
         }>
     {renderResultSearch}    
   </Select>
