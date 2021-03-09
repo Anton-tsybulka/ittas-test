@@ -8,12 +8,14 @@ import {
     SEARCH_CITYWEATHER_REQUESTED,
     SEARCH_CITYWEATHER_SUCCESS,
     SEARCHCLEAR_CITYWEATHER_SUCCESS,
+    DELETE_CITYWEATHER_REQUESTED,
     DELETE_CITYWEATHER_SUCCESS,
     CITYWEATHER_FAILED,    
 } from '../actions/actionTypes';
  
 const initialState = {
     data: [],
+    loading: true,
     error: null,
     resultSearch: []
 };
@@ -25,16 +27,21 @@ export default function cityWeatherReducer(state = initialState, action) {
         case GET_CITYWEATHER_SUCCESS:
             return {
                 ...state,
+                loading: false,
                 data: [...state.data, action.payload],
             };
         case ADD_CITYWEATHER_REQUESTED:
-            return { ...state };
+            return { 
+                ...state,
+                loading: true 
+            };
         case ADD_CITYWEATHER_SUCCESS:
             if (state.data.find(({id}) => id === action.payload.id)) {
                 return { ...state };
             } else {
                 return {
                     ...state,
+                    loading: false,
                     data: [
                         ...state.data,
                         action.payload                    
@@ -42,12 +49,16 @@ export default function cityWeatherReducer(state = initialState, action) {
                 };
             };            
         case UPDATE_CITYWEATHER_REQUESTED:
-            return { ...state };
+            return { 
+                ...state,
+                loading: true
+            };
         case UPDATE_CITYWEATHER_SUCCESS:
             const idx = state.data.findIndex(({id}) => id === action.payload.id);            
             const updateCity = {...state.data[idx], ...action.payload}
             return {
                 ...state,
+                loading: false,
                 data: [
                     ...state.data.slice(0, idx),
                     updateCity,
@@ -55,7 +66,9 @@ export default function cityWeatherReducer(state = initialState, action) {
                ],
             };
         case SEARCH_CITYWEATHER_REQUESTED:
-            return { ...state };
+            return { 
+                ...state,
+            };
         case SEARCH_CITYWEATHER_SUCCESS:
             let sortItems = [];
             action.payload.forEach((item) => {
@@ -76,13 +89,23 @@ export default function cityWeatherReducer(state = initialState, action) {
                 ...state,
                 resultSearch: [...state.resultSearch.slice(0, 0)]
             };
+        case DELETE_CITYWEATHER_REQUESTED:
+            return {
+                ...state,
+                loading: true
+            };
         case DELETE_CITYWEATHER_SUCCESS:
             return {
                 ...state,
+                loading: false,
                 data: [...state.data.filter(({ id }) => id !== action.payload)]
             };
         case CITYWEATHER_FAILED:
-            return { ...state, error: action.message};
+            return { 
+                ...state,
+                loading: false, 
+                error: action.message
+            };
 
         default:
             return state;

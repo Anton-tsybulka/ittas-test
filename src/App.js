@@ -3,9 +3,10 @@ import 'antd/dist/antd.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCityWeather, cityDelete, cityUpdate, citySearch, cityAdd, resultSearchClear } from './redux/actions/cityWeatherActions';
 import { CitySearch, ListCity, MaxMinShow } from './components';
+import { Spin } from 'antd';
 
 const App = () => {
-  const { data: cityWeather, resultSearch } = useSelector((state) => state.cityWeather);
+  const { data: cityWeather, resultSearch, loading } = useSelector((state) => state.cityWeather);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,11 +44,15 @@ const App = () => {
           handleClear={handleClear}
           resultSearch={resultSearch} />
         <MaxMinShow cityWeather={cityWeather} />
-      </div>      
-      <ListCity 
-        cityWeather={cityWeather}
-        handleDelete={handleDelete}
-        handleUpdate={handleUpdate} />
+      </div>
+      { loading ? 
+        <Spin 
+          size="large" 
+          style={{display: 'flex', justifyContent: 'center', marginTop: '250px'}} /> :      
+        <ListCity 
+          cityWeather={cityWeather}
+          handleDelete={handleDelete}
+          handleUpdate={handleUpdate} />}
     </>
   );
 }
