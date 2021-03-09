@@ -3,7 +3,7 @@ import axios from 'axios';
 let cityRequest  = ['Minsk'];
 
 const apiUrl = (city) => {
-   return `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=784081e6b015cdcdacd31e6d9bf22fb8`
+   return `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=ru&appid=784081e6b015cdcdacd31e6d9bf22fb8`
 };
 
 const getCityWeather = (city = cityRequest) => {
@@ -118,4 +118,4 @@ function* deleteCitySaga() {
 
 export { itemCityWeatherSaga, addCitySaga, updateCitySaga, searchCitySaga , deleteCitySaga, clearSearchSaga };
 
-/* &lang=ru */
+/*  */
